@@ -1,9 +1,8 @@
-import { TextField, Paper, Box, Grid } from "@mui/material";
+import { Paper,  Grid, Skeleton } from "@mui/material";
 import { GetServerSideProps } from "next";
-import { useQuery, QueryClient, dehydrate } from "react-query";
+import { useQuery, dehydrate } from "react-query";
 import { PageLayout } from "../../components/PageLayout";
 import { ViewTextField } from "../../components/TextFiledEstabelecimentos";
-import { api } from "../../services/apiClient";
 import { getEstabelecimento } from "../../services/hooks/estabeleciementos";
 import { useRouter } from "next/router";
 import { queryClient } from "../../services/queryClient";
@@ -18,7 +17,10 @@ export default function ViewEstabelecimento() {
   return (
     <>
      <PageLayout>
-       <Paper  sx={{  flexGrow: 1, padding: 2}}>
+       {isLoading ? (
+         <Skeleton variant="rectangular" width={'100%'} height={'100%'}/>
+       ) : (
+         <Paper  sx={{  flexGrow: 1, padding: 2}}>
          <Grid container spacing={2}>
             <ViewTextField 
               labelName={"CNPJ"} 
@@ -28,20 +30,20 @@ export default function ViewEstabelecimento() {
             />
             <ViewTextField 
               labelName={"DATA DA ABERTURA"} 
-              text={data.dataFundacao}  
+              text={data?.dataFundacao}  
               fullWidth
               size={5}
             />
             <ViewTextField 
               labelName={"MATRIZ"} 
-              text={data.matrizFilial}  
+              text={data?.matrizFilial}  
               fullWidth
               size={2}
             />
               
             <ViewTextField 
               labelName={"NOME EMPRESARIAL"} 
-              text={data.razaoSocial}  
+              text={data.razaoSocial}
               fullWidth
               size={6}
             />
@@ -134,6 +136,8 @@ export default function ViewEstabelecimento() {
            
          </Grid>
        </Paper>
+       ) }
+       
        
      </PageLayout>
     </>
