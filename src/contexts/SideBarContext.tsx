@@ -9,8 +9,8 @@ const SidebarDrawerContext = createContext({isOpen: false, handleDrawer:() => {}
 
 export function SidebarDrawerProvider({children}: SidebarDrawerProviderProps) {
   const [isOpen, setIsopen] = useState(false);
-  const router = useRouter()
- let handleDrawer = () => {
+
+  let handleDrawer = () => {
   setIsopen(!isOpen)
  }
 

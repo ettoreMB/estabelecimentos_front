@@ -36,7 +36,6 @@ export default function Home()   {
       },
       onSuccess: () => {
         enqueueSnackbar('CNPJ Econtrado', {variant: 'success',});
-        console.log('Encontrado')
       },
     }
   )
@@ -46,12 +45,8 @@ export default function Home()   {
   })
 
   const handleSearchCNPJ: SubmitHandler<SearchCNPJFormData> = async(value) => {
-    try {
       const cnpj = value;
       await searchCnpj.mutateAsync(cnpj);
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   return (

@@ -2,6 +2,10 @@ import Router from "next/router";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import {setCookie, parseCookies, destroyCookie} from 'nookies';
 import { api } from "../services/apiClient";
+import { useSnackbar } from "notistack";
+import { Alert, Box, Modal, Typography } from "@mui/material";
+import { SettingsPowerRounded } from "@mui/icons-material";
+import { AxiosError } from "axios";
 
 type SigninCredentials = {
   email: string;
@@ -32,12 +36,12 @@ export function signOut() {
   Router.push('/')
 }
 
+
+
 export function AuthProvider({ children }:AuthProviderProps) {
-  
   const [user, setUser] = useState<User>();
   const isAuthenticated = !!user;
  
-
   useEffect(() => {
     const { 'estabelecimentos.token': token} = parseCookies()
 
@@ -46,13 +50,13 @@ export function AuthProvider({ children }:AuthProviderProps) {
           const {email, username} = response.data
           setUser({email, username})
         })
-        .catch(() => {
+        .catch(() => { 
         signOut()
         })
       }
     },[])
 
-   async function signIn({email, password}: SigninCredentials) {
+   async function signIn({email, password}: SigninCredentials) {   
      try {
       const response = await api.post('/authenticate/sessions', {
         email,
@@ -74,12 +78,14 @@ export function AuthProvider({ children }:AuthProviderProps) {
 
        Router.push('/home')
      } catch (error) {
-       console.log(error)
+       const message = error
+      throw ({'error':`${error}`})
+       
      }
    }
 
   return (
-    <AuthContext.Provider value={{isAuthenticated,user, signIn }}>
+    <AuthContext.Provider value={{isAuthenticated,user, signIn  }}>
       {children}
     </AuthContext.Provider>
   )
