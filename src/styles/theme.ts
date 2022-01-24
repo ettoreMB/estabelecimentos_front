@@ -40,6 +40,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: colors.primary[500],
+      100: colors.primary[500]
     },
     text: {
       primary: colors.text
