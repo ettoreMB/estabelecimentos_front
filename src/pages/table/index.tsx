@@ -5,6 +5,7 @@ import { Box, IconButton } from '@mui/material';
 import { PageLayout } from '../../components/PageLayout';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Router from 'next/router'
+import { withSSRAuth } from '../../utils/withSSRAuth';
 
 
 type listValues = {
@@ -93,14 +94,6 @@ export default function Table() {
   );
 }
 
-// export async function getStaticProps () {
-//   // `getStaticProps` is executed on the server side.
-//   const estabelecimentos = await getEstabelecimentos()
-//   return {
-//     props: {
-//       fallback: {
-        
-//       }
-//     }
-//   }
-// }
+export const getServerSideProps = withSSRAuth(async(context) => {
+  return {props: {}}
+})

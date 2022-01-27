@@ -9,6 +9,7 @@ import { PageLayout } from '../../components/PageLayout';
 import {  useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { api } from '../../services/apiClient';
+import { withSSRAuth } from '../../utils/withSSRAuth';
 
 
 
@@ -88,3 +89,6 @@ export default function Home()   {
   )
 }
 
+export const getServerSideProps = withSSRAuth(async(context) => {
+  return {props: {}}
+})
