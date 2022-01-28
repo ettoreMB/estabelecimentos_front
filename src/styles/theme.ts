@@ -95,7 +95,8 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          background: 'white'
+          background: 'white',
+          borderBottom: 0,
         }
       }
     },

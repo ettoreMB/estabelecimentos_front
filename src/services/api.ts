@@ -28,7 +28,7 @@ export function setupAPIClient(context = undefined) {
     return response;
   }, (error: AxiosError) => {
     if (error.response.status == 401) {
-      if (error.response.data?.message === "Invalid Token") {
+      if (error.response.data?.message === "Inavalid Token") {
 
         cookies = parseCookies();
 
