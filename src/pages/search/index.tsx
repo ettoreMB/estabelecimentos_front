@@ -11,7 +11,7 @@ import {  Box, Button, Container, Input, Snackbar, TextField } from '@mui/materi
 import { PageLayout } from '../../components/PageLayout';
 import { useSnackbar } from 'notistack';
 import { api } from '../../services/apiClient';
-import { forwardRef } from 'react';
+import { queryClient } from '../../services/queryClient';
 
 type SearchCNPJFormData = {
   cnpj: string;
@@ -59,6 +59,7 @@ export default function Home()   {
       },
       onSuccess: () => {
         enqueueSnackbar('CNPJ Econtrado', {variant: 'success',});
+        queryClient.invalidateQueries('estabelecimentos')
       },
     }
   )
