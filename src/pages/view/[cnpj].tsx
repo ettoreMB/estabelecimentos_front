@@ -1,4 +1,4 @@
-import { Paper,  Grid, Skeleton } from "@mui/material";
+import { Paper,  Grid, Skeleton, Button } from "@mui/material";
 import { GetServerSideProps } from "next";
 import { useQuery, dehydrate } from "react-query";
 import { PageLayout } from "../../components/PageLayout";
@@ -6,6 +6,7 @@ import { ViewTextField } from "../../components/TextFiledEstabelecimentos";
 import { getEstabelecimento } from "../../services/hooks/estabeleciementos";
 import { useRouter } from "next/router";
 import { queryClient } from "../../services/queryClient";
+
 
 export default function ViewEstabelecimento() {
   const router = useRouter();
@@ -137,7 +138,7 @@ export default function ViewEstabelecimento() {
          </Grid>
        </Paper>
        ) }
-       
+       <Button onClick={() => router.back()}>voltar</Button>
        
      </PageLayout>
     </>
