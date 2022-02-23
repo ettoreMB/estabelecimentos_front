@@ -7,43 +7,23 @@ import { useMutation } from 'react-query';
 import NumberFormat from 'react-number-format';
 
 import LoadingButton from '@mui/lab/LoadingButton';
-import {  Box, Button, Container, Input, Snackbar, TextField } from '@mui/material';
+import {  Box, Button, Container, Snackbar, TextField } from '@mui/material';
 import { PageLayout } from '../../components/PageLayout';
 import { useSnackbar } from 'notistack';
 import { api } from '../../services/apiClient';
 import { queryClient } from '../../services/queryClient';
+import { InputCnpj } from '../../components/Form/InputCnpj';
 
 type SearchCNPJFormData = {
   cnpj: string;
 }
 
-function TextMaskCustom(props) {
-  const { inputRef, ...other } = props;
 
-  return (
-    <NumberFormat
-    {...other}
-    isNumericString
-    type={`text`}
-    format={'###.###.##/####-##'}
-  />
-  );
-}
 
 export default function Home()   {
 
-  const [values, setValues] = React.useState({});
-
-  const handleChange = name => event => {
-    setValues({
-      ...values,
-      [name]: event.target.value
-    });
-  };
-
-
   const searchCnpjSchema = yup.object().shape({
-    cnpj: yup.string().required('CNPJ Obrigatório')
+    cnpj: yup.number().required('CNPJ Obrigatório').typeError('Deve ser um número').transform((o, v) => parseInt(v.replace(/,/g, '')))
   })
 
   const { enqueueSnackbar } = useSnackbar();
@@ -69,8 +49,9 @@ export default function Home()   {
   })
 
   const handleSearchCNPJ: SubmitHandler<SearchCNPJFormData> = async(value) => {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    await searchCnpj.mutateAsync(value)
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log(value)
+    // await searchCnpj.mutateAsync(checkedValue)
   }
 
   return (
@@ -89,25 +70,21 @@ export default function Home()   {
             }}
             component="form" 
             onSubmit={handleSubmit(handleSearchCNPJ)}>
-          <TextField
-          sx={{
-            marginRight: '10px'
-          }}
 
-            variant="filled"
-            placeholder='CNPJ'
-            required
-            fullWidth
-            type={"text"}
-            id="cnpj"
-            autoFocus
-            onChange={handleChange("textmask")}
-            InputProps={{
-              inputComponent: TextMaskCustom
-            }}
-            {...register('cnpj')}
-            error={errors.cnpj}
-          />
+            <InputCnpj 
+              sx={{
+                marginRight: '10px'
+              }}
+              required
+              fullWidth
+              type='text'
+              mask='cnpj' 
+              name="nome" 
+              label='label' 
+              {...register("cnpj")}  
+              err={errors.cnpj}
+              inputProps={{ maxLength: 17 }}
+            />
     
           {isSubmitting ? (
           <LoadingButton 

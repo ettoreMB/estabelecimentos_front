@@ -56,7 +56,7 @@ export default function Table() {
     { field: 'Razao Social', flex: 1},
     { field: 'Nome Fantasia',flex: 1 },
     { field: 'matriz',  },
-    { field: 'Codigo Atividade Economica',  },
+    { field: 'CNAE',  },
     { field: 'Cidade', },
     { field: 'Estado', },
   ]
@@ -70,6 +70,7 @@ export default function Table() {
       matriz: value.matriz_filial,
       Cidade: value.endereco_cidade,
       Estado: value.endereco_estado,
+      CNAE: value.cod_atividade_economica
 
     }
   })
